@@ -77,6 +77,7 @@ class BSTNode:
 
     # Call the function `fn` on the value of each node
     def for_each(self, fn):
+        # base case, call for_each to the root node, otherwise it won't ever start
         fn(self.value)
         # this calls the side of the tree to the right of the root
         if self.right:
