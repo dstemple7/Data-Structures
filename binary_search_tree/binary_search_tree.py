@@ -9,6 +9,42 @@ This part of the project comprises two days:
 2. Implement the `in_order_print`, `bft_print`, and `dft_print` methods
    on the BSTNode class.
 """
+
+class Stack:
+    def __init__(self):
+        self.size = 0
+        self.storage = []
+
+    def __len__(self):
+        return len(self.storage)
+
+    def push(self, value):
+        self.storage.append(value)
+
+    def pop(self):
+        if len(self.storage) > 0:
+            return self.storage.pop()
+
+class Queue:
+    def __init__(self):
+        self.size = 0
+        self.storage = []
+    
+    def __len__(self):
+        return len(self.storage)
+
+    def __str__(self):
+        return (f'{self.storage}')
+
+    def enqueue(self, value):
+        self.storage.append(value)
+
+    def dequeue(self):
+        if len(self.storage) > 0:
+            return self.storage.pop(0)
+        else:
+            return None
+
 class BSTNode:
     def __init__(self, value):
         self.value = value
@@ -67,7 +103,7 @@ class BSTNode:
     # Return the maximum value found in the tree
     def get_max(self):
         # can run to check if there's something to the right of a node
-        if self.right != None:
+        if self.right:
             # then do it again and say on the self.right check if something to the right and again and again
             return self.right.get_max()
         # once there is not, that's the max
@@ -93,17 +129,47 @@ class BSTNode:
     # Print all the values in order from low to high
     # Hint:  Use a recursive, depth first traversal
     def in_order_print(self):
-        pass
+        # Maryam says think of this as left -> center -> right vs. others CRL and RLC
+        if self.left:
+            self.left.in_order_print()
+        print(self.value)
+        if self.right:
+            self.right.in_order_print()
 
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
     def bft_print(self):
-        pass
+        # queue
+        q = Queue()
+        c = self
+        while c:
+            if c is None:
+                return
+            if c != None:
+                print(c.value)
+            if c.left:
+                q.enqueue(c.left)
+            if c.right:
+                q.enqueue(c.right)
+            c = q.dequeue()
 
     # Print the value of every node, starting with the given node,
     # in an iterative depth first traversal
     def dft_print(self):
-        pass
+        # stack
+        s = Stack()
+        c = self
+        while c:
+            if c is None:
+                return
+            if c != None:
+                print(c.value)
+            if c.left:
+                s.push(c.left)
+            if c.right:
+                s.push(c.right)
+            c = s.pop()
+
 
     # Stretch Goals -------------------------
     # Note: Research may be required
